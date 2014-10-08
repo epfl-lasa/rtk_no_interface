@@ -1,0 +1,26 @@
+
+<package>
+  <description brief="LWRInterface">
+
+     LWRInterface
+
+  </description>
+  <author>klas</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/LWRInterface</url>
+
+
+  <depend package="roscpp"/>
+  <depend package="FRILibrary_ros"/>
+
+  <depend package="StdTools"/>
+  <depend package="MathLib"/>
+  <depend package="RobotLib"/>
+
+  <depend package="KUKARobotModel"/>
+
+  <export> <cpp cflags="-I${prefix}/include" lflags="-L${prefix}/lib -Wl,-rpath,${prefix}/lib "/> </export>
+</package>
+
+

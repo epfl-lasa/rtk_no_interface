@@ -21,9 +21,9 @@ boost::thread *mKUKAThread;
 
 void sighandle(int signal)
 {
-  myCoreInterface->Stop();
-  myCoreInterface->Free();
-  exit(1);
+    myCoreInterface->Stop();
+    myCoreInterface->Free();
+    exit(1);
 }
 
 void KUKAUpdate(void)
@@ -32,10 +32,11 @@ void KUKAUpdate(void)
     //control loop is here
     while(true)
     {
-        if(cnt==10){
+        //        if(cnt==10){
+//        if(cnt==1){
             myCoreInterface->Update();
             cnt = 0;
-        }
+//        }
         cnt++;
         myCoreInterface->UpdateCore();
 
@@ -48,29 +49,29 @@ Robot * myRobot;
 int main(int argc, char ** argv)
 {
 
-  signal(SIGINT, sighandle);
-  FileFinder::AddBasePath(".");
-  FileFinder::AddBasePath("./data");
+    signal(SIGINT, sighandle);
+    FileFinder::AddBasePath(".");
+    FileFinder::AddBasePath("./data");
 
-  XmlTree args;
-  pXmlTree tree,tree2;
-  pXmlTreeList tlist,tlist2;
-  char modName[256];
-  Robot *cRobot;
-  vector<string> nameAndPatches;
-  bool bShowHelp= false;
-  bool bError = false;
+    XmlTree args;
+    pXmlTree tree,tree2;
+    pXmlTreeList tlist,tlist2;
+    char modName[256];
+    Robot *cRobot;
+    vector<string> nameAndPatches;
+    bool bShowHelp= false;
+    bool bError = false;
 
-  XmlTree argStruct("args","", 7, new XmlTree("config",    "", "needArg=\"true\""),
-		    new XmlTree("debug",     "d","needArg=\"\""),
-		    new XmlTree("robot",     "r","needArg=\"true\""),
-		    new XmlTree("module",    "m","needArg=\"true\""),
-		    new XmlTree("args",      "a","needArg=\"true\""),
-		    new XmlTree("world",     "w","needArg=\"true\""),
-		    new XmlTree("help",      "h","needArg=\"\"")
-		    );
+    XmlTree argStruct("args","", 7, new XmlTree("config",    "", "needArg=\"true\""),
+                      new XmlTree("debug",     "d","needArg=\"\""),
+                      new XmlTree("robot",     "r","needArg=\"true\""),
+                      new XmlTree("module",    "m","needArg=\"true\""),
+                      new XmlTree("args",      "a","needArg=\"true\""),
+                      new XmlTree("world",     "w","needArg=\"true\""),
+                      new XmlTree("help",      "h","needArg=\"\"")
+                      );
 
-  bShowHelp = !args.ParseArguments(argc,argv, &argStruct);
+    bShowHelp = !args.ParseArguments(argc,argv, &argStruct);
 
     string configFile;
     XmlTree config("Config");
@@ -148,7 +149,7 @@ int main(int argc, char ** argv)
             }
         }
         if(cnt>0){
-             gLOG.AppendToEntry("Messages","Using package path(s): <%s>",Serialize(paths).c_str());
+            gLOG.AppendToEntry("Messages","Using package path(s): <%s>",Serialize(paths).c_str());
         }
     }
     if(!bHasInterfacePath){
@@ -162,30 +163,30 @@ int main(int argc, char ** argv)
 
 
 
-  // myRobot = new Robot();
-  // myRobot->Load("dummy","");
-  // cout<<"my robot has :  "<<  myRobot->GetLinksCount()<<" links"<<endl;
+    // myRobot = new Robot();
+    // myRobot->Load("dummy","");
+    // cout<<"my robot has :  "<<  myRobot->GetLinksCount()<<" links"<<endl;
 
 
-  myCoreInterface = new LWRCore();
+    myCoreInterface = new LWRCore();
 
-  myCoreInterface->SetName("KUKA");
-  myCoreInterface->GetConsole()->SetName("KUKA");
+    myCoreInterface->SetName("KUKA");
+    myCoreInterface->GetConsole()->SetName("KUKA");
 
 
-  myWorld = new World();
+    myWorld = new World();
     if((tree = config.Find("World"))!=NULL){
         if(tree->GetData().length()>0){
             if(!myWorld->Load(tree->GetData())){
                 gLOG.AppendToEntry("Messages","Error while opening and reading world file: %s",tree->GetData().c_str());
                 bError = true;
-		//                Cleanup();
+                //                Cleanup();
                 return false;
             }
         }
 
 
-    
+
         // World modules
         tlist = tree->GetSubTrees();
         for(int i=0;i<int(tlist->size());i++){
@@ -228,11 +229,11 @@ int main(int argc, char ** argv)
 
 
     if(bError){
-      //      Cleanup();
-      return 0;
+        //      Cleanup();
+        return 0;
     }
 
-  
+
 
     //Loading robots
     tlist = config.GetSubTrees();
@@ -242,12 +243,12 @@ int main(int argc, char ** argv)
             nameAndPatches = Tokenize(RemoveSpaces(tree->GetData()));
             if(nameAndPatches.size()>0){
 
-            	if(nameAndPatches[0].substr(0,4) =="KUKA" || nameAndPatches[0].substr(0,3) =="LWR"){
-            		cRobot = new LWRRobot();
+                if(nameAndPatches[0].substr(0,4) =="KUKA" || nameAndPatches[0].substr(0,3) =="LWR"){
+                    cRobot = new LWRRobot();
 
-            	}
-            	else
-            		cRobot = new Robot();
+                }
+                else
+                    cRobot = new Robot();
 
                 if(!cRobot->Load(nameAndPatches[0], Serialize(nameAndPatches,1))){
                     gLOG.AppendToEntry("Messages","Error: While operning and reading robot file <%s>",nameAndPatches[0].c_str());
@@ -270,7 +271,7 @@ int main(int argc, char ** argv)
                                     interface->SetOptionTree(tlist2->at(j));
                                     interface->SetAutoPerformanceTiming(false);
                                     myRobotInterfaces.push_back((RobotInterface*)interface);
-                                    cRobot->AddInterface((RobotInterface*)interface);                                    
+                                    cRobot->AddInterface((RobotInterface*)interface);
                                     if(tlist2->at(j)->Get("Name",string("")).length()>0){
                                         interface->SetName(cRobot->GetName()+string("_")+tlist2->at(j)->Get("Name",string("")));
                                     }else{
@@ -300,7 +301,7 @@ int main(int argc, char ** argv)
                     wObject->SetRobot(cRobot);
                     if(tree->Find("Origin")){
                         int size;
-			REALTYPE * array;
+                        REALTYPE * array;
                         size=tree->GetArray("Origin",&array);
                         if(size==3){
                             wObject->GetReferenceFrame(true).SetOrigin().Set(array);
@@ -337,26 +338,26 @@ int main(int argc, char ** argv)
 
 
     if(bError){
-      //        Cleanup();
+        //        Cleanup();
         return 0;
     }
 
 
     LWRRobot* myLWR = NULL;
     for(int i=0;i<myRobots.size(); i++){
-    	cout<<"the robot type"<<endl;
-    	cout<<myRobots[i]->GetType()<<endl;
-    	if(myRobots[i]->GetType().substr(0,3)=="LWR" || myRobots[i]->GetType().substr(0,4)=="KUKA"){
-    		myLWR = (LWRRobot*)myRobots[i];
-    		break;
-    	}
+        cout<<"the robot type"<<endl;
+        cout<<myRobots[i]->GetType()<<endl;
+        if(myRobots[i]->GetType().substr(0,3)=="LWR" || myRobots[i]->GetType().substr(0,4)=="KUKA"){
+            myLWR = (LWRRobot*)myRobots[i];
+            break;
+        }
     }
 
 
 
     if(myLWR==NULL){
         cerr << "Error: No KUKA robot defined."<<endl;
-	//        Cleanup();
+        //        Cleanup();
         return 0;
     }
 
@@ -365,37 +366,37 @@ int main(int argc, char ** argv)
     cout<<"my LWR robot has: "<<myLWR->GetSensorsCount()<<" sensors " <<endl;
 
 
-  myCoreInterface->SetRobot(myLWR);
-  myCoreInterface->SetWorld(myWorld);
+    myCoreInterface->SetRobot(myLWR);
+    myCoreInterface->SetWorld(myWorld);
 
-  //QApplication myapp( argc, argv );
+    //QApplication myapp( argc, argv );
 
-  //ok
+    //ok
 
-  if(myCoreInterface->Init() != RobotInterface::STATUS_OK)
+    if(myCoreInterface->Init() != RobotInterface::STATUS_OK)
     {
-      myCoreInterface->Stop();
-      myCoreInterface->Free();
-      cout<<"Cannot init"<<endl;
-      exit(1);
+        myCoreInterface->Stop();
+        myCoreInterface->Free();
+        cout<<"Cannot init"<<endl;
+        exit(1);
 
     }
-  //ok
+    //ok
 
-  // the LWRCore starts a console thread here
-  if(myCoreInterface->Start() != RobotInterface::STATUS_OK)
+    // the LWRCore starts a console thread here
+    if(myCoreInterface->Start() != RobotInterface::STATUS_OK)
     {
-      myCoreInterface->Stop();
-      myCoreInterface->Free();
-      cout<<"Cannot start"<<endl;
-      return 0;
+        myCoreInterface->Stop();
+        myCoreInterface->Free();
+        cout<<"Cannot start"<<endl;
+        return 0;
     }
 
-  //  mKUKAThread = new boost::thread(&KUKAUpdate);
-  KUKAUpdate();
+    //  mKUKAThread = new boost::thread(&KUKAUpdate);
+    KUKAUpdate();
 
-  //printf("Entering main loop...\n");
-  //  myapp.exec();
+    //printf("Entering main loop...\n");
+    //  myapp.exec();
 
-  return 0;
+    return 0;
 }

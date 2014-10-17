@@ -150,7 +150,7 @@ RobotInterface::Status LWRCore::RobotStop()
 
     return STATUS_OK;
 }
-RobotInterface::Status LWRCore::RobotUpdate(){ 
+RobotInterface::Status LWRCore::RobotUpdate(){
 
 
     return STATUS_OK; }
@@ -367,7 +367,6 @@ void LWRCore::ControlUpdate(){
                 if(cnt==REL_FREQ_IMPEDANCE_UPDATE){
                     mFRI->SetCommandedJointStiffness(jstiff);
                     mFRI->SetCommandedJointDamping(jdamp);
-                    //                        cout<<"I set the stiffness and damping "<<endl;
                     cnt=0;
                 }
 
@@ -415,21 +414,16 @@ void LWRCore::ControlUpdate(){
                 float *  cart_pose_command;
                 cart_pose_command = mLWRRobot->GetCartCommandAsFloat();
 
-
-
                 // 2) send the cartesian command to the real robot.
-
                 mFRI->SetCommandedCartPose(cart_pose_command);
-
 
                 // 3) get the desired stiffness and damping
                 float * cart_stiffness;
                 float * cart_damping;
 
                 cart_stiffness = mLWRRobot->GetCartStiffnessAsFloat();
-
-
                 cart_damping = mLWRRobot->GetCartDampingAsFloat();
+
                 // 4)send the desired stiffness and damping
                 cnt++;
                 if(cnt==REL_FREQ_IMPEDANCE_UPDATE){
@@ -439,13 +433,8 @@ void LWRCore::ControlUpdate(){
                 }
 
                 //5) set desired force
-
                 float * desiredForce;
                 desiredForce = mLWRRobot->GetDesiredForceAsFloat();
-                /*cout<<"simdi borda desired force"<<endl;
-    for(int i=0;i<6;i++){
-    cout<<desiredForce[i]<<" ";
-    }*/
                 mFRI->SetCommandedCartForcesAndTorques(desiredForce);
 
                 break;
@@ -454,18 +443,37 @@ void LWRCore::ControlUpdate(){
 
         {
         case Robot::CTRLMODE_TORQUE:
+
+                // 1) Track the position
                 float jpc2[LBR_MNJ];
-                float jtorq[LBR_MNJ];
+                mFRI->GetMeasuredJointPositions(jpc2);
+                SetCommandedJPos(jpc2);
+
+
+                // 2) Get torques and send them
                 Vector cmdJT(LBR_MNJ);
                 cmdJT = mLWRRobot->GetCommandedJointTorques();
-                mFRI->GetMeasuredJointPositions(jpc2);
+
+                float jtorq[LBR_MNJ];
                 for(int i=0;i<LBR_MNJ;i++){
                     jtorq[i] = cmdJT[i];
                 }
-
-                // we set stiffness and damping to zero in the setcontrolmode
-                SetCommandedJPos(jpc2);
                 mFRI->SetCommandedJointTorques(jtorq);
+
+
+                // 3) Get and set damping
+                /* It's possible to add damping in torque mode (avoid excessive velocities) */
+
+                float jdamp[LBR_MNJ];
+                for(int i=0;i<LBR_MNJ;i++)
+                    jdamp[i] = mLWRRobot->GetJointDamping()(i);
+
+                if(cnt==REL_FREQ_IMPEDANCE_UPDATE){
+                    mFRI->SetCommandedJointDamping(jdamp);
+                    cnt=0;
+                }
+                cnt++;
+
 
                 break;
         }

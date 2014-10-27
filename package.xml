@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>LWRInterface</name>
+  <name>lwr_interface</name>
   <version>0.0.0</version>
-  <description> LWRInterface</description>
+  <description> lwr_interface</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
@@ -19,7 +19,7 @@
   <!-- Url tags are optional, but mutiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/ImpedanceControlTools</url> -->
+  <!-- <url type="website">http://wiki.ros.org/impedance_control_tools</url> -->
 
 
   <!-- Author tags are optional, mutiple are allowed, one per tag -->
@@ -42,18 +42,19 @@
 
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>roscpp</build_depend>
-  <build_depend>FRILibrary_ros</build_depend>
-  <build_depend>StdTools</build_depend>
-  <build_depend>MathLib</build_depend>
-  <build_depend>RobotLib</build_depend>  
-  <build_depend>KUKARobotModel</build_depend>
+  <build_depend>fri_library_ros</build_depend>
+  <build_depend>std_tools</build_depend>
+  <build_depend>mathlib</build_depend>
+  <build_depend>robotlib</build_depend>  
+  <build_depend>kuka_robot_model</build_depend>
+  <build_depend>simulator_dynamics</build_depend>
 
   <run_depend>roscpp</run_depend>
-  <run_depend>FRILibrary_ros</run_depend>
-  <run_depend>StdTools</run_depend>
-  <run_depend>MathLib</run_depend>
-  <run_depend>RobotLib</run_depend>
-  <run_depend>KUKARobotModel</run_depend>
+  <run_depend>fri_library_ros</run_depend>
+  <run_depend>std_tools</run_depend>
+  <run_depend>mathlib</run_depend>
+  <run_depend>robotlib</run_depend>
+  <run_depend>kuka_robot_model</run_depend>
 
 
 

@@ -1,12 +1,12 @@
 <Config>
 
-<Packages> LWRInterface </Packages>
+<Packages> lwr_interface </Packages>
     <World> 
 
 </World>
     <Robot> KUKA
         <Name> KUKA </Name>
-        <RobotModule> ExampleTracker
+        <RobotModule> example_tracker
             <Options>
             </Options>
         </RobotModule> 

@@ -1,15 +1,15 @@
 cmake_minimum_required(VERSION 2.4.6)
 ####include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
-project(LWRInterface)
+project(lwr_interface)
 find_package(catkin REQUIRED COMPONENTS
-  #LWRInterface
-  RobotLib
-  #RTK_pkg_tools # not sure why
-  SimulatorDynamics
-  StdTools
-  GLTools
-  FRILibrary_ros  
-  KUKARobotModel
+  #lwr_interface
+  robotlib
+  #rtk_pkg_tools # not sure why
+  simulator_dynamics
+  std_tools
+  gl_tools
+  fri_library_ros  
+  kuka_robot_model
 )
 
 
@@ -44,7 +44,7 @@ set(ROS_BUILD_TYPE RelWithDebInfo) # Not sure if that will still work
 #set the default path for built libraries to the "lib" directory
 ####set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-#set(LWRInterface PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+#set(lwr_interface PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 #set(LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 
@@ -76,7 +76,7 @@ catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
 #  CATKIN_DEPENDS message_runtime
-#  CATKIN_DEPENDS MathLib RobotLib StdTools
+#  CATKIN_DEPENDS mathlib robotlib std_tools
 #  DEPENDS system_lib
 )
 
@@ -89,36 +89,36 @@ target_link_libraries(LWRMain ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 set_target_properties(LWRMain  PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 set_target_properties(LWRMain  PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 
-####rosbuild_find_ros_package(LWRInterface)
-####rosbuild_find_ros_package(RobotLib)
+####rosbuild_find_ros_package(lwr_interface)
+####rosbuild_find_ros_package(robotlib)
 
 #--------------------------------------------
-####string(REPLACE "/packages/core/RobotLib" "" RobotToolKit_STACK_PATH ${RobotLib_PACKAGE_PATH})
+####string(REPLACE "/packages/core/robotlib" "" robottoolkit_STACK_PATH ${robotlib_PACKAGE_PATH})
 # Not to be used
 
-MESSAGE("LWRInterface_PACKAGE_PATH: " ${PROJECT_SOURCE_DIR})
-MESSAGE("RobotLib_INCLUDE_DIRS_modified: " ${RobotLib_INCLUDE_DIRS}/../../../../bin)
+MESSAGE("lwr_interface_PACKAGE_PATH: " ${PROJECT_SOURCE_DIR})
+MESSAGE("robotlib_INCLUDE_DIRS_modified: " ${robotlib_INCLUDE_DIRS}/../../../../bin)
 
-####ADD_CUSTOM_COMMAND(TARGET LWRMain POST_BUILD COMMAND ln -sf ${LWRInterface_PACKAGE_PATH}/bin/LWRMain ${RobotToolKit_STACK_PATH}/bin/LWRMain) 
+####ADD_CUSTOM_COMMAND(TARGET LWRMain POST_BUILD COMMAND ln -sf ${lwr_interface_PACKAGE_PATH}/bin/LWRMain ${robottoolkit_STACK_PATH}/bin/LWRMain) 
 
-SET(RobotToolKit_ROOT_PATH ${RobotLib_INCLUDE_DIRS}/../../../../)
+SET(robottoolkit_ROOT_PATH ${robotlib_INCLUDE_DIRS}/../../../../)
 ## TODO # EDIT this one ...
-ADD_CUSTOM_COMMAND(TARGET LWRMain POST_BUILD COMMAND ln -sf ${PROJECT_SOURCE_DIR}/bin/LWRMain ${RobotToolKit_ROOT_PATH}/bin/) 
+ADD_CUSTOM_COMMAND(TARGET LWRMain POST_BUILD COMMAND ln -sf ${PROJECT_SOURCE_DIR}/bin/LWRMain ${robottoolkit_ROOT_PATH}/bin/) 
 #-----------------------------------------
 #create symlinks for data and config..
-####rosbuild_find_ros_package(RTK_pkg_tools)
+####rosbuild_find_ros_package(rtk_pkg_tools)
 # first create a target that will always be built, that output s nothing but executes a command..
-####add_custom_target(dataAndConfig COMMAND ${RTK_pkg_tools_PACKAGE_PATH}/SetupPackage.sh ${PROJECT_NAME})
+####add_custom_target(dataAndConfig COMMAND ${rtk_pkg_tools_PACKAGE_PATH}/SetupPackage.sh ${PROJECT_NAME})
 # make sure this target is built by rosbuild
 ####add_dependencies(rosbuild_precompile dataAndConfig)
 
 
-#find path to RTK_pkg_tools
-SET(RTK_pkg_tools_ROOT_PATH ${RobotToolKit_ROOT_PATH}packages/core/RTK_pkg_tools)
-MESSAGE("RTK_pkg_tools_ROOT_PATH: " ${RTK_pkg_tools_ROOT_PATH})
+#find path to rtk_pkg_tools
+SET(rtk_pkg_tools_ROOT_PATH ${robottoolkit_ROOT_PATH}packages/core/rtk_pkg_tools)
+MESSAGE("rtk_pkg_tools_ROOT_PATH: " ${rtk_pkg_tools_ROOT_PATH})
 
 #Execute the configure script (copy data and config folders) # THIS WORKS 10/2014
-execute_process(COMMAND ${RTK_pkg_tools_ROOT_PATH}/SetupPackage2.sh ${PROJECT_NAME} )
+execute_process(COMMAND ${rtk_pkg_tools_ROOT_PATH}/SetupPackage2.sh ${PROJECT_NAME} )
 #----------------------------------------
 
 ####FIND_PACKAGE(Qt4 COMPONENTS QtCore QtGui QtOpenGL REQUIRED)

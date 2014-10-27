@@ -1,24 +1,24 @@
 
 <package>
-  <description brief="LWRInterface">
+  <description brief="lwr_interface">
 
-     LWRInterface
+     lwr_interface
 
   </description>
   <author>klas</author>
   <license>BSD</license>
   <review status="unreviewed" notes=""/>
-  <url>http://ros.org/wiki/LWRInterface</url>
+  <url>http://ros.org/wiki/lwr_interface</url>
 
 
   <depend package="roscpp"/>
-  <depend package="FRILibrary_ros"/>
+  <depend package="fri_library_ros"/>
 
-  <depend package="StdTools"/>
-  <depend package="MathLib"/>
-  <depend package="RobotLib"/>
+  <depend package="std_tools"/>
+  <depend package="mathlib"/>
+  <depend package="robotlib"/>
 
-  <depend package="KUKARobotModel"/>
+  <depend package="kuka_robot_model"/>
 
   <export> <cpp cflags="-I${prefix}/include" lflags="-L${prefix}/lib -Wl,-rpath,${prefix}/lib "/> </export>
 </package>

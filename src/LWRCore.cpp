@@ -13,7 +13,7 @@ LWRCore::LWRCore(): RobotInterface(true)
 
     /*Note, the above is the more general way to find the path, but ros/package library does not work when the program is run as sudo, therefor we use this ugly hard coded path..this will only work if the interface is started from the RobotToolKit base folder*/
 
-    std::string driverPath = "./data/packages/LWRInterface/Misc/980039-FRI-Driver.init";
+    std::string driverPath = "./data/packages/lwr_interface/Misc/980039-FRI-Driver.init";
 
 
     //  mFRI = new FastResearchInterface("980039-FRI-Driver.init");

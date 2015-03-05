@@ -18,8 +18,18 @@ LWRCore::LWRCore(): RobotInterface(true)
 
     //  mFRI = new FastResearchInterface("980039-FRI-Driver.init");
     mFRI = new FastResearchInterface(driverPath.c_str());
-
+    cout<<"hejere\n";
     mFRI->GetCommunicationTimingQuality();
+
+
+    tempMassMatrix = new float*[LBR_MNJ];
+    for (int i=0; i<LBR_MNJ; i++)
+        tempMassMatrix[i] = new float[LBR_MNJ];
+
+
+    tempJacobian = new float*[FRI_CART_VEC];
+    for (int i=0; i<FRI_CART_VEC; i++)
+        tempJacobian[i] = new float[LBR_MNJ];
 
 }
 
@@ -526,7 +536,7 @@ void LWRCore::SensorsUpdate(){
     /*NOTE: CURRENTLY EXTREMELY POOR ESTIMATION OF VELOCITY AND ACCELRATION!
     WE SHOULD PROBABLY USE A FILTER HERE.*/
 
-
+  cout<<"about to die\n";
 
     //store the time of measurement and the measurement
     LWRMeasurement thisMeasurement;
@@ -540,10 +550,7 @@ void LWRCore::SensorsUpdate(){
     float tempCartPose[12];
     float tempCartPose_commanded[12];
     //float tempMassMatrix[LBR_MNJ][LBR_MNJ];
-    float **tempMassMatrix;
-    tempMassMatrix = new float*[LBR_MNJ];
-    for (int i=0; i<LBR_MNJ; i++)
-        tempMassMatrix[i] = new float[LBR_MNJ];
+
 
     //char txt[5000];
     // get the actual values from FRI
@@ -557,8 +564,11 @@ void LWRCore::SensorsUpdate(){
     mFRI->GetCommandedCartPose(tempCartPose_commanded);
 
     mFRI->GetCurrentMassMatrix(tempMassMatrix);
-
     mLWRRobot->SetMassMatrix(tempMassMatrix);
+
+cout<<"made it\n";
+    mFRI->GetCurrentJacobianMatrix(tempJacobian);
+    mLWRRobot->SetJacobian(tempJacobian);
 
     //CompleteLWRState vector structure:
     // 7xJoint Positions + 12xCart Pose + 7xJoint Torques +

@@ -132,6 +132,9 @@ class LWRCore : public RobotInterface
   float jnt2[LBR_MNJ];
   float cart2[FRI_CART_FRM_DIM];
   float cart_imp_params[FRI_CART_VEC];
+
+  float** tempMassMatrix;
+  float** tempJacobian;
   //yarp::sig::Vector currJoint;
   //yarp::sig::Vector cartVec;
   MathLib::Vector currJoint;

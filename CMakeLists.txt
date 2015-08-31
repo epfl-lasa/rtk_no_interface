@@ -9,6 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
   gl_tools
   fri_library_ros  
   kuka_robot_model
+  roslib
 )
 
 

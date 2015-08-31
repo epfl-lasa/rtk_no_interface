@@ -7,6 +7,8 @@
 #include <vector>
 #include <QApplication>
 
+#include "ros/package.h"
+
 using namespace std;
 
 LWRCore * myCoreInterface;
@@ -52,6 +54,11 @@ int main(int argc, char ** argv)
     signal(SIGINT, sighandle);
     FileFinder::AddBasePath(".");
     FileFinder::AddBasePath("./data");
+
+    std::string path = ros::package::getPath("rtk_pkg_tools");
+    // Wow, so much skill.
+    FileFinder::AddBasePath(path + "/..");
+    FileFinder::AddBasePath(path + "/../data");
 
     XmlTree args;
     pXmlTree tree,tree2;
@@ -132,6 +139,7 @@ int main(int argc, char ** argv)
         config.Set("World",args.Get("world",string("")));
     }
 
+    std::string path_rtkpkgtools = ros::package::getPath("rtk_pkg_tools");
 
     bool bHasInterfacePath = false;
     if((tree = config.Find("Packages"))!=NULL){
@@ -145,6 +153,8 @@ int main(int argc, char ** argv)
             paths[i] = path;
             if(path.length()>0){
                 FileFinder::AddAdditionalPath(path);
+                // Wow, such hack.
+                FileFinder::AddAdditionalPath(path_rtkpkgtools + "/." + path);
                 cnt++;
             }
         }
@@ -155,6 +165,9 @@ int main(int argc, char ** argv)
     if(!bHasInterfacePath){
         string path = string("./data/packages/LWRInterface");
         FileFinder::AddAdditionalPath(path);
+        // Wow, such hack.
+        FileFinder::AddAdditionalPath(path_rtkpkgtools + "/." + path);
+
         gLOG.AppendToEntry("Messages","Adding package path: <%s>",path.c_str());
         bHasInterfacePath = true;
     }

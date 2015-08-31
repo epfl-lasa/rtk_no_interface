@@ -4,6 +4,11 @@ if [ -z "$1" ]
     exit
 fi
 
+if [ "$(id -u)" != "0" ]; then
+	echo "Sorry, you are not root."
+	exit 1
+fi
+
 LIMITS=/etc/security/limits.conf
 COMMON_SESSION=/etc/pam.d/common-session
 echo "Looking into \"$LIMITS\": is the line \"$USER hard rtprio 95\"  present ?"

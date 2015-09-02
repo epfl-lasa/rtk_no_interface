@@ -537,7 +537,7 @@ void LWRCore::SensorsUpdate(){
   /*NOTE: CURRENTLY EXTREMELY POOR ESTIMATION OF VELOCITY AND ACCELRATION!
     WE SHOULD PROBABLY USE A FILTER HERE.*/
 
-  cout<<"about to die\n";
+  //cout<<"about to die\n";
 
   //store the time of measurement and the measurement
   LWRMeasurement thisMeasurement;
@@ -567,7 +567,7 @@ void LWRCore::SensorsUpdate(){
   mFRI->GetCurrentMassMatrix(tempMassMatrix);
   mLWRRobot->SetMassMatrix(tempMassMatrix);
 
-  cout<<"made it\n";
+  //cout<<"made it\n";
   mFRI->GetCurrentJacobianMatrix(tempJacobian);
   mLWRRobot->SetJacobian(tempJacobian);
 

@@ -642,8 +642,15 @@ void LWRCore::SensorsUpdate(){
     thisMeasurement.JointVelocities.Set(thisMeasurement.JointPositions);
     thisMeasurement.JointVelocities -= MeasurementHistory.front().JointPositions;
     double dt = thisMeasurement.t - MeasurementHistory.front().t;
-    //  cout<<"this is my time"<<dt<<endl;
-    thisMeasurement.JointVelocities /= dt;
+    // a dirty little hack follows here. It is needed to avoid NaN velocities arising from copies of datagrams leading to dt==0.0
+    if(dt<0.0001){
+      // if this happens, just use previous velocity and hope for the best
+      thisMeasurement.JointVelocities = MeasurementHistory.front().JointVelocities;
+    }
+    else{
+      // this is what should normally happen, for non-zero dt.
+      thisMeasurement.JointVelocities /= dt;
+    }
 
 
     thisMeasurement.JointAccelerations.Set(thisMeasurement.JointVelocities);

@@ -4,7 +4,7 @@ project(lwr_interface)
 find_package(catkin REQUIRED COMPONENTS
   robotlib
   rtk_pkg_tools # Someone: not sure why, Klas: because the linking should be correct, see end of this file 02/2015
-  simulator_dynamics
+  #simulator_dynamics
   std_tools
   gl_tools
   fri_library_ros  

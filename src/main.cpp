@@ -1,7 +1,7 @@
 
 #include "signal.h"
 
-#include "LWRCore.h"
+#include "LWRCore_no.h"
 #include "StdTools/XmlTree.h"
 #include "StdTools/Various.h"
 #include <vector>
@@ -34,15 +34,10 @@ void KUKAUpdate(void)
     //control loop is here
     while(true)
     {
-        //        if(cnt==10){
-//        if(cnt==1){
-            myCoreInterface->Update();
-            cnt = 0;
-//        }
+        myCoreInterface->Update();
+        cnt = 0;
         cnt++;
         myCoreInterface->UpdateCore();
-
-        //      usleep(10000) ;
     }
 }
 
@@ -173,14 +168,6 @@ int main(int argc, char ** argv)
     }
 
 
-
-
-
-    // myRobot = new Robot();
-    // myRobot->Load("dummy","");
-    // cout<<"my robot has :  "<<  myRobot->GetLinksCount()<<" links"<<endl;
-
-
     myCoreInterface = new LWRCore();
 
     myCoreInterface->SetName("KUKA");
@@ -219,7 +206,7 @@ int main(int argc, char ** argv)
                         }else{
                             interface->SetName(string("World"));
                         }
-                        myCoreInterface->GetConsole()->AddConsole(interface->GetConsole());
+//                        myCoreInterface->GetConsole()->AddConsole(interface->GetConsole());
                         gLOG.AppendToEntry("Messages","World module <%s> sucessfully loaded",modName);
 
                     }else if(interface!=NULL){
@@ -242,7 +229,6 @@ int main(int argc, char ** argv)
 
 
     if(bError){
-        //      Cleanup();
         return 0;
     }
 
@@ -290,7 +276,7 @@ int main(int argc, char ** argv)
                                     }else{
                                         interface->SetName(cRobot->GetName());
                                     }
-                                    myCoreInterface->GetConsole()->AddConsole(interface->GetConsole());
+//                                    myCoreInterface->GetConsole()->AddConsole(interface->GetConsole());
                                     gLOG.AppendToEntry("Messages","Robot module <%s> sucessfully loaded",modName);
 
                                 }else if(interface!=NULL){
@@ -351,7 +337,6 @@ int main(int argc, char ** argv)
 
 
     if(bError){
-        //        Cleanup();
         return 0;
     }
 
@@ -382,9 +367,6 @@ int main(int argc, char ** argv)
     myCoreInterface->SetRobot(myLWR);
     myCoreInterface->SetWorld(myWorld);
 
-    //QApplication myapp( argc, argv );
-
-    //ok
 
     if(myCoreInterface->Init() != RobotInterface::STATUS_OK)
     {
@@ -405,11 +387,7 @@ int main(int argc, char ** argv)
         return 0;
     }
 
-    //  mKUKAThread = new boost::thread(&KUKAUpdate);
     KUKAUpdate();
-
-    //printf("Entering main loop...\n");
-    //  myapp.exec();
 
     return 0;
 }

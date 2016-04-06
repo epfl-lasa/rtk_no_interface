@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 2.4.6)
 ####include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
-project(lwr_interface)
+project(no_interface)
 find_package(catkin REQUIRED COMPONENTS
   robotlib
   rtk_pkg_tools # Someone: not sure why, Klas: because the linking should be correct, see end of this file 02/2015
   #simulator_dynamics
   std_tools
   gl_tools
-  fri_library_ros  
+  # fri_library_ros  
   kuka_robot_model
   roslib
 )
@@ -43,12 +43,12 @@ catkin_package(
 
 include_directories(include)
 include_directories(${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
-add_executable(lwr_main src/main.cpp src/LWRCore.cpp include/LWRCore.h)
-target_link_libraries(lwr_main ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+add_executable(lwr_main_no src/main.cpp src/LWRCore_no.cpp include/LWRCore_no.h )
+target_link_libraries(lwr_main_no ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
 # link the executable to the traditional location
 set(ROBOTTOOLKIT_PATH ${rtk_pkg_tools_SOURCE_DIR}/..)
 # this way it does not matter if the original build is in source or not.
 get_property(exec_output_dir TARGET lwr_main PROPERTY RUNTIME_OUTPUT_DIRECTORY)
-add_custom_command(TARGET lwr_main POST_BUILD COMMAND ln -sf ${exec_output_dir}/lwr_main ${ROBOTTOOLKIT_PATH}/bin/lwr_main )
+add_custom_command(TARGET lwr_main POST_BUILD COMMAND ln -sf ${exec_output_dir}/lwr_main_no ${ROBOTTOOLKIT_PATH}/bin/lwr_main_no )
 include(${rtk_pkg_tools_SOURCE_DIR}/rtk_create_symlinks.cmake)

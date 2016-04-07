@@ -1,2 +1,2 @@
 # lwr_interface
-RobotToolkit interface for KUKA LWR robot
+RobotToolkit interface without any overhead

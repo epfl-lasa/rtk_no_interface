@@ -32,12 +32,15 @@ void KUKAUpdate(void)
 {
     int cnt=0;
     //control loop is here
+
+    ros::Rate r(1000.0);
     while(true)
     {
         myCoreInterface->Update();
         cnt = 0;
         cnt++;
         myCoreInterface->UpdateCore();
+        r.sleep();
     }
 }
 

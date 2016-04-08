@@ -51,29 +51,29 @@
     /* }; */
 
 
-#ifndef RAD
-#define RAD(A)	((A) * M_PI / 180.0 )
-#endif
+//#ifndef RAD
+//#define RAD(A)	((A) * M_PI / 180.0 )
+//#endif
 
-#ifndef DEG
-#define DEG(A)	((A) * 180.0 / M_PI )
-#endif
+//#ifndef DEG
+//#define DEG(A)	((A) * 180.0 / M_PI )
+//#endif
 
 
-#define FRI_CONN_TIMEOUT_SEC	30
+//#define FRI_CONN_TIMEOUT_SEC	30
 
-#define JOINT_MAX_VEL_DEG_SEC  60.0
-#define JOINT_MAX_ACC_DEG_SEC  60.0
-#define CART_MAX_VEL_M_SEC  0.2
-#define CART_MAX_ACC_M_SEC  0.05
+//#define JOINT_MAX_VEL_DEG_SEC  60.0
+//#define JOINT_MAX_ACC_DEG_SEC  60.0
+//#define CART_MAX_VEL_M_SEC  0.2
+//#define CART_MAX_ACC_M_SEC  0.05
 
-#define FRI_JOINT_STIFFNESS 1000
-#define FRI_JOINT_DAMPING   0.7
+//#define FRI_JOINT_STIFFNESS 1000
+//#define FRI_JOINT_DAMPING   0.7
 
-#define FRI_CART_STIFFNESS_POS 		300
-#define FRI_CART_STIFFNESS_ORIENT 	30
-#define FRI_CART_DAMPING_POS 		0.7
-#define FRI_CART_DAMPING_ORIENT 	0.7
+//#define FRI_CART_STIFFNESS_POS 		300
+//#define FRI_CART_STIFFNESS_ORIENT 	30
+//#define FRI_CART_DAMPING_POS 		0.7
+//#define FRI_CART_DAMPING_ORIENT 	0.7
 
 
 
@@ -81,7 +81,7 @@
 /*this parameter determines how often the impedance should be updated relative to the position.
  * example: if REL_FREQ_IMPEDANCE_UPDATE = 10, then the desired impedance will be sent to the robot
  * every 10 iterations of desrired pose command update.*/
-#define REL_FREQ_IMPEDANCE_UPDATE 10
+//#define REL_FREQ_IMPEDANCE_UPDATE 10
 
 
 // a little structure used for storing measurements from the robot

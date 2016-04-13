@@ -38,7 +38,7 @@ void KUKAUpdate(void)
 
   while (true)
   {
-    ROS_ERROR("KUKAUpdate");
+//    ROS_ERROR("KUKAUpdate");
     myCoreInterface->Update();
     cnt = 0;
     cnt++;

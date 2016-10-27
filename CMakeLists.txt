@@ -49,6 +49,6 @@ target_link_libraries(lwr_main_no ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 # link the executable to the traditional location
 set(ROBOTTOOLKIT_PATH ${rtk_pkg_tools_SOURCE_DIR}/..)
 # this way it does not matter if the original build is in source or not.
-get_property(exec_output_dir TARGET lwr_main PROPERTY RUNTIME_OUTPUT_DIRECTORY)
-add_custom_command(TARGET lwr_main POST_BUILD COMMAND ln -sf ${exec_output_dir}/lwr_main_no ${ROBOTTOOLKIT_PATH}/bin/lwr_main_no )
+get_property(exec_output_dir TARGET lwr_main_no PROPERTY RUNTIME_OUTPUT_DIRECTORY)
+add_custom_command(TARGET lwr_main_no POST_BUILD COMMAND ln -sf ${exec_output_dir}/lwr_main_no ${ROBOTTOOLKIT_PATH}/bin/lwr_main_no )
 include(${rtk_pkg_tools_SOURCE_DIR}/rtk_create_symlinks.cmake)
